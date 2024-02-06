@@ -34,12 +34,14 @@ public static class PathFinderTask
             return;
         }
 
+        double currentDistance = PointExtensions.GetPathLength(checkpoints, permutation[0..position]);
+
         for (int i = 1; i < permutation.Length; i++)
         {
             var index = Array.IndexOf(permutation, i, 1, position - 1);
             if (index != -1)
                 continue;
-            if (PointExtensions.GetPathLength(checkpoints, permutation[0 .. position]) + checkpoints[permutation[position - 1]].DistanceTo(checkpoints[i]) < bestRouteLength)
+            if (currentDistance + checkpoints[permutation[position - 1]].DistanceTo(checkpoints[i]) < bestRouteLength)
             {
                 permutation[position] = i;
                 MakePermutations(permutation, position + 1, ref checkpoints, ref bestRouteLength, ref route);

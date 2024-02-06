@@ -13,7 +13,7 @@ public partial class App
 
 	private static IEnumerable<TestCase> CreateTestCases()
 	{
-		for (var i = 4; i < 4; i++)
+		for (var i = 1; i < 4; i++)
 			foreach (var testCase in CreateTestCasesForDifficulty(i))
 				yield return testCase;
 
