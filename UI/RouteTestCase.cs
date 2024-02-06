@@ -40,7 +40,7 @@ internal class RouteTestCase : TestCase
 		var pts = order.Select(i => checkpoints[i])
 			.Select(p => new PointF(margin + (p.X - minX) * scale, margin + (p.Y - minY) * scale)).ToArray();
 
-		var startPoint = pts.First();
+		var startPoint = pts.FirstOrDefault();
 		var darkRedPen = new Avalonia.Media.Pen(Avalonia.Media.Brushes.DarkRed);
 		var redPen = new Avalonia.Media.Pen(Avalonia.Media.Brushes.Red);
 		foreach (var endPoint in pts.Skip(1))
