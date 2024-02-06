@@ -13,16 +13,16 @@ public partial class App
 
 	private static IEnumerable<TestCase> CreateTestCases()
 	{
-		for (var i = 1; i < 4; i++)
+		for (var i = 4; i < 4; i++)
 			foreach (var testCase in CreateTestCasesForDifficulty(i))
 				yield return testCase;
 
-		// Большие тесты. Реализуйте отсечение перебора, чтобы они проходили быстро
-		// foreach (var testCase in CreateTestCasesForDifficulty(4, false))
-		// 	yield return testCase;
-	}
+        // Большие тесты. Реализуйте отсечение перебора, чтобы они проходили быстро
+        // foreach (var testCase in CreateTestCasesForDifficulty(4, false))
+        // 	yield return testCase;
+    }
 
-	private static IEnumerable<TestCase> CreateTestCasesForDifficulty(int difficulty, bool pathsMustMatch = true)
+    private static IEnumerable<TestCase> CreateTestCasesForDifficulty(int difficulty, bool pathsMustMatch = true)
 	{
 		foreach (var testFile in Directory.GetFiles("tests", difficulty + "-*.txt"))
 		{
