@@ -1,3 +1,4 @@
+using Avalonia.Markup.Xaml.Templates;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,12 +11,30 @@ public static class PathFinderTask
 {
 	public static int[] FindBestCheckpointsOrder(Point[] checkpoints)
 	{
-        int[] tempRoute = new int[checkpoints.Length];
-        int[] route = MakeTrivialPermutation(checkpoints.Length);
-        double bestRouteLength = PointExtensions.GetPathLength(checkpoints, route);
-        MakePermutations(tempRoute, 1, ref checkpoints, ref bestRouteLength, ref route);
-        return route;
-	}
+        if(checkpoints.Length > 12)
+        {
+            List<int> visited = new()
+            {
+                0
+            };
+            List<int> unvisited = new();
+            for(int i = 1; i < checkpoints.Length; i++)
+            {
+                unvisited.Add(i);
+            }
+
+            GreedyRouteFinder(ref checkpoints, ref visited, unvisited);
+            return visited.ToArray();
+        }
+        else
+        {
+            int[] tempRoute = new int[checkpoints.Length];
+            int[] route = MakeTrivialPermutation(checkpoints.Length);
+            double bestRouteLength = PointExtensions.GetPathLength(checkpoints, route);
+            MakePermutations(tempRoute, 1, ref checkpoints, ref bestRouteLength, ref route);
+            return route;
+        }
+    }
 
     private static int[] MakeTrivialPermutation(int size)
     {
@@ -51,5 +70,28 @@ public static class PathFinderTask
                 return;
             }
         }
+    }
+
+    static void GreedyRouteFinder(ref Point[] checkpoints, ref List<int> visited, List<int> unvisited)
+    {
+        if (unvisited.Count == 1)
+        {
+            visited.Add(unvisited[0]);
+            return;
+        }
+
+        int indexOfNextPoint = 0;
+        for (int i = 1; i < unvisited.Count; i++)
+        {
+            if (checkpoints[visited[^1]].DistanceTo(checkpoints[unvisited[indexOfNextPoint]]) > checkpoints[visited[^1]].DistanceTo(checkpoints[unvisited[i]]))
+            {
+                indexOfNextPoint = i;
+            }
+        }
+
+        visited.Add(unvisited[indexOfNextPoint]);
+        unvisited.Remove(unvisited[indexOfNextPoint]);
+
+        GreedyRouteFinder(ref checkpoints, ref visited, unvisited);
     }
 }

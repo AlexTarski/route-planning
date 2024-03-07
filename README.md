@@ -1,7 +1,7 @@
 # Route
 
-Best (shorter) route planing recursive algorithm.
+Best (shorter) route planning recursive algorithm.
 Function takes Point[] checkpoints. Route is always starts from checkpoint[0]. Returns points order, which represents shortest route.
 
-Fully working algorithm on 1-3 group of tests.
-Working but not the fastest "skip using" solution. It works only on 4.1 big test.
+For 1 – 3 groups of tests have been used method with recursive permutations.
+For 4th group of tests have been used recursive greedy algorithm.
